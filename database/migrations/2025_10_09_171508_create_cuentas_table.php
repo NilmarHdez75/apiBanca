@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cuentas', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_cuenta');
+            $table->foreignId('id_socio')->constrained('socios')->onUpdate('cascade')->onDelete('cascade');
+            $table->enum('tipo_cuenta', ['ahorro', 'crédito']);
+            $table->decimal('saldo', 10, 2)->default(0);
+            $table->date('fecha_apertura')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

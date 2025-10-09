@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movimientos', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_movimiento');
+            $table->foreignId('id_cuenta')->constrained('cuentas')->onUpdate('cascade')->onDelete('cascade');
+            $table->enum('tipo_movimiento', ['deposito', 'retiro']);
+            $table->decimal('monto', 10, 2);
+            $table->timestamp('fecha_movimiento')->useCurrent();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
