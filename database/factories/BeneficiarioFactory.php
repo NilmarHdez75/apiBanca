@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\DireccionBeneficiario;
 use App\Models\Socio;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -27,5 +28,12 @@ class BeneficiarioFactory extends Factory
             'porcentaje' => $this->faker->randomFloat(2, 10, 100),
             'is_active' => true,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function ($beneficiario) {
+            DireccionBeneficiario::factory()->create(['id_beneficiario' => $beneficiario->id]);
+        });
     }
 }

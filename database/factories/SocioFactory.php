@@ -23,11 +23,11 @@ class SocioFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'id_user' => User::factory(),
             'numero_socio' => '12-10-' . $this->faker->unique()->numerify('#####'),
             'apellido_paterno' => $this->faker->lastName(),
             'apellido_materno' => $this->faker->lastName(),
-            'genero' => $this->faker->randomElement(['M', 'F']),
+            'sexo' => $this->faker->randomElement(['M', 'F']),
             'fecha_nacimiento' => $this->faker->date(),
             'nacionalidad' => 'Mexicana',
             'curp' => strtoupper($this->faker->bothify('????######??????')),
@@ -43,11 +43,11 @@ class SocioFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function ($socio) {
-            DireccionSocio::factory()->create(['id_socio' => $socio->id_socio]);
-            Beneficiario::factory(2)->create(['id_socio' => $socio->id_socio]);
+            DireccionSocio::factory()->create(['id_socio' => $socio->id]);
+            Beneficiario::factory(2)->create(['id_socio' => $socio->id]);
             //Contrato::factory()->create(['id_socio' => $socio->id_socio]);
-            $cuenta = Cuenta::factory()->create(['id_socio' => $socio->id_socio]);
-            \App\Models\Movimiento::factory(3)->create(['id_cuenta' => $cuenta->id_cuenta]);
+            $cuenta = Cuenta::factory()->create(['id_socio' => $socio->id]);
+            \App\Models\Movimiento::factory(3)->create(['id_cuenta' => $cuenta->id]);
         });
     }
 }

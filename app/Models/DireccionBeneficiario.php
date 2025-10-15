@@ -11,7 +11,7 @@ class DireccionBeneficiario extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'direcciones_beneficiarios';
+    protected $table = 'direcciones_beneficiario';
     protected $fillable = [
         'id_beneficiario',
         'calle',
