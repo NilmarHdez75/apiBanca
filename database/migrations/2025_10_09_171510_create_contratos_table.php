@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contratos', function (Blueprint $table) {
-            $table->id('id_contrato');
+            $table->id();
             $table->foreignId('id_socio')->constrained('socios')->onUpdate('cascade')->onDelete('cascade');
             $table->string('archivo_pdf');
             $table->timestamp('fecha_generacion')->useCurrent();

@@ -12,8 +12,6 @@ class DireccionBeneficiario extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'direcciones_beneficiarios';
-    protected $primaryKey = 'id_direccion';
-
     protected $fillable = [
         'id_beneficiario',
         'calle',
@@ -28,6 +26,6 @@ class DireccionBeneficiario extends Model
     ];
 
     public function beneficiario(): BelongsTo{
-        return $this->belongsTo(Beneficiario::class, 'id_beneficiario');
+        return $this->belongsTo(Beneficiario::class);
     }
 }

@@ -11,8 +11,8 @@ class Sucursal extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $primaryKey = 'id_sucursal';
 
+    protected $table = 'sucursales';
     protected $fillable = [
         'nombre',
         'direccion',
@@ -21,6 +21,6 @@ class Sucursal extends Model
     ];
 
     public function socio(): HasMany{
-        return $this->hasMany(Socio::class, 'id_sucursal');
+        return $this->hasMany(Socio::class);
     }
 }

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('socios', function (Blueprint $table) {
-            $table->id('id_socio');
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('id_user')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('numero_socio')->unique();
             $table->string('apellido_paterno');
             $table->string('apellido_materno');

@@ -11,9 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Cuenta extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $primaryKey = 'id_cuenta';
-
     protected $fillable = [
         'id_socio',
         'tipo_cuenta',
@@ -23,10 +20,10 @@ class Cuenta extends Model
     ];
 
     public function socio(): BelongsTo{
-        return $this->belongsTo(Socio::class, 'id_socio');
+        return $this->belongsTo(Socio::class);
     }
 
     public function movimientos(): HasMany{
-        return $this->hasMany(Movimiento::class, 'id_cuenta');
+        return $this->hasMany(Movimiento::class);
     }
 }

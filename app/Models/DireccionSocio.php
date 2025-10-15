@@ -12,7 +12,6 @@ class DireccionSocio extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'direcciones_socios';
-    protected $primaryKey = 'id_direccion';
 
     protected $fillable = [
         'id_socio',
@@ -28,6 +27,6 @@ class DireccionSocio extends Model
     ];
 
     public function socio(): BelongsTo{
-        return $this->belongsTo(Socio::class, 'id_socio');
+        return $this->belongsTo(Socio::class);
     }
 }

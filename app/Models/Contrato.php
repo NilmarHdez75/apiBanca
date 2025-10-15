@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Contrato extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $primaryKey = 'id_contrato';
-
     protected $fillable = [
         'id_socio',
         'archivo_pdf',
@@ -21,6 +18,6 @@ class Contrato extends Model
     ];
 
     public function socio(): BelongsTo{
-        return $this->belongsTo(Socio::class, 'id_socio');
+        return $this->belongsTo(Socio::class);
     }
 }

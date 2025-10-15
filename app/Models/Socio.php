@@ -12,9 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Socio extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $primaryKey = 'id_socio';
-
     protected $fillable = [
         'user_id',
         'numero_socio',
@@ -32,26 +29,26 @@ class Socio extends Model
     ];
 
     public function user(): BelongsTo{
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function direccion(): HasOne{
-        return $this->hasOne(DireccionSocio::class, 'id_socio');
+        return $this->hasOne(DireccionSocio::class);
     }
 
     public function beneficiarios(): HasMany{
-        return $this->hasMany(Beneficiario::class, 'id_socio');
+        return $this->hasMany(Beneficiario::class);
     }
 
     public function cuentas(): HasMany{
-        return $this->hasMany(Cuenta::class, 'id_socio');
+        return $this->hasMany(Cuenta::class);
     }
 
     public function contratos(): HasMany{
-        return $this->hasMany(Contrato::class, 'id_socio');
+        return $this->hasMany(Contrato::class);
     }
 
     public function sucursal(): BelongsTo{
-        return $this->belongsTo(Sucursal::class, 'id_sucursal');
+        return $this->belongsTo(Sucursal::class);
     }
 }

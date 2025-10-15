@@ -11,9 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Beneficiario extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $primaryKey = 'id_beneficiario';
-
     protected $fillable = [
         'id_socio',
         'nombre',
@@ -26,10 +23,10 @@ class Beneficiario extends Model
     ];
 
     public function socio(): BelongsTo{
-        return $this->belongsTo(Socio::class, 'id_socio');
+        return $this->belongsTo(Socio::class);
     }
 
     public function direccion(): HasOne{
-        return $this->hasOne(DireccionBeneficiario::class, 'id_beneficiario');
+        return $this->hasOne(DireccionBeneficiario::class);
     }
 }

@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Movimiento extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $primaryKey = 'id_movimiento';
-
     protected $fillable = [
         'id_cuenta',
         'tipo_movimiento',
@@ -22,6 +19,6 @@ class Movimiento extends Model
     ];
 
     public function cuenta(): BelongsTo{
-        return $this->belongsTo(Cuenta::class, 'id_cuenta');
+        return $this->belongsTo(Cuenta::class);
     }
 }

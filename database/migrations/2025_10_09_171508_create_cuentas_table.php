@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cuentas', function (Blueprint $table) {
-            $table->id('id_cuenta');
+            $table->id();
             $table->foreignId('id_socio')->constrained('socios')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('tipo_cuenta', ['ahorro', 'crédito']);
             $table->decimal('saldo', 10, 2)->default(0);
