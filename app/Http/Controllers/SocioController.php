@@ -6,6 +6,7 @@ use App\Http\Requests\StoreSocioRequest;
 use App\Http\Requests\UpdateSocioRequest;
 use App\Models\Contrato;
 use App\Models\Socio;
+use App\Notifications\ContratoGeneradoNotification;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,38 +35,51 @@ class SocioController extends Controller
     {
         try {
             $data = $request->validated();
+
+            // Crear el socio
             $socio = Socio::create($data);
 
-            // Generar PDF del contrato
+            // Generar el contrato en PDF con los datos del socio
             $pdf = Pdf::loadView('pdf.contrato', [
                 'socio' => $socio,
-                'fecha' => now()->format('d/m/Y')
+                'fecha' => now()->format('d/m/Y'),
             ]);
 
-            // Definir nombre y ruta del archivo
+            // Definir el nombre y ruta del archivo PDF
             $fileName = 'contrato_' . $socio->numero_socio . '.pdf';
             $filePath = 'contratos/' . $fileName;
 
             // Guardar el archivo en storage/app/public/contratos
             Storage::disk('public')->put($filePath, $pdf->output());
 
-            // Registrar contrato en base de datos
-            Contrato::create([
+            // Registrar el contrato en la base de datos
+            $contrato = Contrato::create([
                 'socio_id' => $socio->id,
                 'fecha_firma' => now(),
                 'archivo_contrato' => $filePath,
                 'is_active' => true,
             ]);
 
+            // Enviar el contrato por correo electrónico
+            if (!empty($socio->email)) {
+                $socio->notify(new ContratoGeneradoNotification($socio, $filePath));
+            }
+
             return response()->json([
                 'success' => true,
-                'message' => 'Socio registrado y contrato generado correctamente.',
-                'data' => $socio
+                'message' => 'Socio registrado, contrato generado y enviado correctamente.',
+                'data' => [
+                    'socio' => $socio,
+                    'contrato' => $contrato,
+                ],
             ], 201);
 
         } catch (\Exception $e) {
             Log::error('Error al registrar socio: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Error al registrar socio.'], 500);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al registrar socio o enviar contrato.',
+            ], 500);
         }
     }
 
