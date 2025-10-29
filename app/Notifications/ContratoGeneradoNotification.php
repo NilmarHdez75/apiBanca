@@ -29,16 +29,17 @@ class ContratoGeneradoNotification extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        $nombre = $this->socio->nombre . ' ' . $this->socio->apellidos;
+        $absolutePath = Storage::disk('public')->path($this->filePath);
 
         return (new MailMessage)
-            ->subject('Contrato de Afiliación - Caja Popular San Juan Bosco')
-            ->greeting("¡Bienvenido(a), {$nombre}!")
-            ->line('Te damos la bienvenida a la Caja Popular San Juan Bosco.')
-            ->line('Adjunto encontrarás tu contrato de afiliación en formato PDF.')
-            ->attach(Storage::disk('public')->path($this->filePath))
-            ->line('Por favor, conserva este documento como comprobante de tu registro.')
-            ->line('Gracias por confiar en nosotros.')
-            ->salutation('Atentamente, Caja Popular San Juan Bosco');
+            ->subject('Contrato de Registro - Caja Popular San Juan Bosco')
+            ->greeting('Hola ' . $this->socio->apellido_paterno . ' ' . $this->socio->apellido_materno)
+            ->line('Adjunto encontrarás tu contrato de registro como socio de la Caja Popular San Juan Bosco.')
+            ->line('Por favor conserva este documento para tus registros.')
+            ->attach($absolutePath, [
+                'as' => 'Contrato_' . $this->socio->numero_socio . '.pdf',
+                'mime' => 'application/pdf',
+            ])
+            ->line('Gracias por confiar en nosotros.');
     }
 }

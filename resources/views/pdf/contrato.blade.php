@@ -16,12 +16,11 @@
 <p>En la ciudad de San Cristóbal de las Casas, Chiapas, a la fecha {{ $fecha }}, la Caja Popular San Juan Bosco acuerda con el socio:</p>
 
 <div class="info">
-    <strong>Nombre completo:</strong> {{ $socio->nombre }} {{ $socio->apellidos }} <br>
+    <strong>Nombre completo:</strong> {{ $user->name }} {{ $socio->apellido_paterno }} {{ $socio->apellido_materno }} <br>
     <strong>Número de socio:</strong> {{ $socio->numero_socio }} <br>
     <strong>CURP:</strong> {{ $socio->curp }} <br>
     <strong>INE:</strong> {{ $socio->ine }} <br>
-    <strong>Domicilio:</strong> {{ $socio->direccion?->calle }} {{ $socio->direccion?->numero_ext }}, {{ $socio->direccion?->colonia }}, {{ $socio->direccion?->municipio }}, {{ $socio->direccion?->estado }}
-</div>
+    </div>
 
 <p>El socio acepta los términos y condiciones establecidos por la Caja Popular San Juan Bosco para el manejo de sus cuentas de ahorro y servicios financieros.</p>
 
