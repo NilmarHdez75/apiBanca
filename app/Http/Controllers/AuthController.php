@@ -123,19 +123,34 @@ class AuthController extends Controller
     /**
      * Recuperación de contraseña
      */
-    public function forgotPassword(Request $request): JsonResponse
+    public function forgotPassword(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()->first()
+            ], 400);
+        }
 
         $status = Password::sendResetLink(
             $request->only('email')
         );
 
         if ($status === Password::RESET_LINK_SENT) {
-            return response()->json(['success' => true, 'message' => 'Enlace de recuperación enviado a tu correo.']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Se ha enviado el enlace de recuperación a tu correo.'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'No se pudo enviar el enlace.'
+            ], 400);
         }
-
-        return response()->json(['success' => false, 'message' => 'No se pudo enviar el enlace.'], 400);
     }
 
     /**
