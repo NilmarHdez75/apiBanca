@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.bancadigital",
+            "sha256_cert_fingerprints": [
+                "FF:5B:B0:0B:42:FF:F5:B8:42:61:2C:CE:CA:7B:77:B3:AB:E6:B6:76:0F:73:E9:54:F3:6A:CA:12:CB:B6:04:ED"
+            ]
+        }
+    }
+]
