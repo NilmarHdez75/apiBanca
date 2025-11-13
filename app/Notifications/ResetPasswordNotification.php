@@ -9,7 +9,7 @@ class ResetPasswordNotification extends ResetPassword
 {
     protected function resetUrl($notifiable)
     {
-        return 'cajapopular://reset-password?token=' . $this->token . '&email=' . urlencode($notifiable->getEmailForPasswordReset());
+        return 'https://apicaja.duckdns.org/reset-password?token=' . $this->token . '&email=' . urlencode($notifiable->getEmailForPasswordReset());
     }
 
     public function toMail($notifiable)
