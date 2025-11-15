@@ -3,15 +3,23 @@
 namespace App\Notifications;
 
 use Carbon\Carbon;
-use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\URL;
 
-class VerifyEmailCustom extends VerifyEmail
+class VerifyEmailCustom extends Notification
 {
+    use Queueable;
+
+    public function via($notifiable)
+    {
+        return ['mail'];
+    }
+
     protected function verificationUrl($notifiable)
     {
-        $temporarySignedUrl = URL::temporarySignedRoute(
+        return URL::temporarySignedRoute(
             'verification.verify',
             Carbon::now()->addMinutes(60),
             [
@@ -19,8 +27,6 @@ class VerifyEmailCustom extends VerifyEmail
                 'hash' => sha1($notifiable->getEmailForVerification()),
             ]
         );
-
-        return $temporarySignedUrl;
     }
 
     public function toMail($notifiable)
