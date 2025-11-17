@@ -18,14 +18,17 @@ class VerifyEmailCustom extends Notification
 
     protected function verificationUrl($notifiable)
     {
-        return URL::temporarySignedRoute(
+        $path = URL::temporarySignedRoute(
             'verification.verify',
             now()->addMinutes(60),
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
-            ]
+            ],
+            absolute: false
         );
+
+        return url($path);
     }
 
     public function toMail($notifiable)
