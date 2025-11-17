@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -21,7 +20,7 @@ class VerifyEmailCustom extends Notification
     {
         return URL::temporarySignedRoute(
             'verification.verify',
-            Carbon::now()->addMinutes(60),
+            now()->addMinutes(60),
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
