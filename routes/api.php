@@ -27,7 +27,6 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Rutas Protegidas (requieren autenticación con token)

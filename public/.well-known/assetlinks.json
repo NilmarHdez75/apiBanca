@@ -5,7 +5,8 @@
             "namespace": "android_app",
             "package_name": "com.bancadigital",
             "sha256_cert_fingerprints": [
-                "FF:5B:B0:0B:42:FF:F5:B8:42:61:2C:CE:CA:7B:77:B3:AB:E6:B6:76:0F:73:E9:54:F3:6A:CA:12:CB:B6:04:ED"
+                "FF:5B:B0:0B:42:FF:F5:B8:42:61:2C:CE:CA:7B:77:B3:AB:E6:B6:76:0F:73:E9:54:F3:6A:CA:12:CB:B6:04:ED",
+                "C4:4D:17:24:ED:8A:1C:95:BF:3E:5A:A4:FD:8A:EF:41:13:64:25:CC:3F:CC:92:2E:E3:93:1C:F0:06:99:98:1A"
             ]
         }
     }
