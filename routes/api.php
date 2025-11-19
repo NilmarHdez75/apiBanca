@@ -30,7 +30,6 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
     ->middleware(['signed'])
     ->name('verification.verify');
-
 /*
 |--------------------------------------------------------------------------
 | Rutas Protegidas (requieren autenticación con token)
