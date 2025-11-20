@@ -30,6 +30,15 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
     ->middleware(['signed'])
     ->name('verification.verify');
+
+// Reenviar correo de verificación
+Route::post('/email/resend', function (Request $request) {
+    if ($request->user()->hasVerifiedEmail()) {
+        return response()->json(['message' => 'El correo ya fue verificado.'], 200);
+    }
+    $request->user()->sendEmailVerificationNotification();
+    return response()->json(['message' => 'Correo de verificación reenviado.'], 200);
+});
 /*
 |--------------------------------------------------------------------------
 | Rutas Protegidas (requieren autenticación con token)
@@ -39,15 +48,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Cerrar sesión
     Route::post('/logout', [AuthController::class, 'logout']);
-
-    // Reenviar correo de verificación
-    Route::get('/email/verify', function (Request $request) {
-        if ($request->user()->hasVerifiedEmail()) {
-            return response()->json(['message' => 'El correo ya fue verificado.'], 200);
-        }
-        $request->user()->sendEmailVerificationNotification();
-        return response()->json(['message' => 'Correo de verificación reenviado.'], 200);
-    });
 
     /*
     |--------------------------------------------------------------------------
