@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ReSendVerificationController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeneficiarioController;
@@ -8,8 +9,6 @@ use App\Http\Controllers\DireccionBeneficiarioController;
 use App\Http\Controllers\DireccionSocioController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\SocioController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 | Rutas Públicas (sin autenticación)
 |--------------------------------------------------------------------------
 */
-
 // Registro e inicio de sesión
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -26,22 +24,17 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
-// Verificación de correo (enlace del email)
+// Verificación de correo
 Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
     ->middleware(['signed'])
     ->name('verification.verify');
 
 // Reenviar correo de verificación
-Route::post('/email/resend', function (Request $request) {
-    if ($request->user()->hasVerifiedEmail()) {
-        return response()->json(['message' => 'El correo ya fue verificado.'], 200);
-    }
-    $request->user()->sendEmailVerificationNotification();
-    return response()->json(['message' => 'Correo de verificación reenviado.'], 200);
-});
+Route::post('/email/resend', ReSendVerificationController::class);
+
 /*
 |--------------------------------------------------------------------------
-| Rutas Protegidas (requieren autenticación con token)
+| Rutas Protegidas
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth:sanctum'])->group(function () {
