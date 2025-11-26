@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Contrato;
 use App\Models\Socio;
+use App\Models\Sucursal;
 use App\Models\User;
 use App\Notifications\ContratoGeneradoNotification;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -31,9 +32,26 @@ class RegistroSocioService
                 return ['success' => false, 'message' => 'Este usuario ya tiene un socio registrado.'];
             }
 
+            $sucursal = Sucursal::find($data['id_sucursal']);
+
+            if (!$sucursal) {
+                return ['success' => false, 'message' => 'La sucursal no existe.'];
+            }
+
+            $ultimoSocio = Socio::where('id_sucursal', $sucursal->id)
+                ->lockForUpdate()
+                ->orderBy('id', 'desc')
+                ->first();
+
+            $consecutivo = $ultimoSocio ? ((int)substr($ultimoSocio->numero_socio, -4)) + 1 : 1;
+
+            $numeroSucursal = str_pad($sucursal->id, 2, '0', STR_PAD_LEFT);
+            $numeroConsecutivo = str_pad($consecutivo, 4, '0', STR_PAD_LEFT);
+            $numeroSocio = "10-{$numeroSucursal}-{$numeroConsecutivo}";
+
             $socio = Socio::create([
                 'id_user' => $user->id,
-                'numero_socio' => $data['numero_socio'],
+                'numero_socio' => $numeroSocio,
                 'apellido_paterno' => $data['apellido_paterno'],
                 'apellido_materno' => $data['apellido_materno'],
                 'sexo' => $data['sexo'],
@@ -43,14 +61,13 @@ class RegistroSocioService
                 'rfc' => $data['rfc'] ?? null,
                 'ine' => $data['ine'] ?? null,
                 'telefono' => $data['telefono'] ?? null,
-                'id_sucursal' => $data['id_sucursal'],
+                'id_sucursal' => $sucursal->id,
             ]);
 
-            // Generar contrato en PDF
             $pdf = Pdf::loadView('pdf.contrato', [
-                'socio' => $socio,
-                'user' => $user,
-                'fecha' => now()->format('d/m/Y')
+                'socio'   => $socio,
+                'user'    => $user,
+                'fecha'   => now()->format('d/m/Y')
             ]);
 
             $fileName = 'contrato_' . $socio->numero_socio . '.pdf';
@@ -71,7 +88,6 @@ class RegistroSocioService
 
             DB::commit();
 
-            //Enviar contrato al correo del usuario
             $user->notify(new ContratoGeneradoNotification($socio, $filePath));
 
             return [
@@ -83,6 +99,7 @@ class RegistroSocioService
                     'correo_enviado' => $user->email
                 ]
             ];
+
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error al registrar socio: ' . $e->getMessage());
