@@ -99,8 +99,7 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Inicio de sesión exitoso.',
             'user' => $user,
-            'token' => $token,
-            'has_socio'=> User::socios()
+            'token' => $token
         ]);
     }
 

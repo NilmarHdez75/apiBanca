@@ -29,21 +29,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_active',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    protected $appends = ['has_socio'];
 
     protected function casts(): array
     {
@@ -61,6 +52,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function getHasSocioAttribute()
+    {
+        return $this->socios()->exists();
     }
 
     public function socios(): HasOne{
