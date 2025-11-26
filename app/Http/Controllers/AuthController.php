@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\RegistroSocioService;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,14 +41,12 @@ class AuthController extends Controller
         }
 
         try {
-            // 1️⃣ Crear usuario
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
 
-            // 2️⃣ Enviar correo de verificación
             $user->sendEmailVerificationNotification();
 
             return response()->json([
@@ -89,7 +86,6 @@ class AuthController extends Controller
             ], 403);
         }
 
-        // Verificar si está activo
         if (!$user->is_active) {
             return response()->json([
                 'success' => false,
@@ -103,7 +99,8 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Inicio de sesión exitoso.',
             'user' => $user,
-            'token' => $token
+            'token' => $token,
+            'has_socio'=> User::socios()
         ]);
     }
 

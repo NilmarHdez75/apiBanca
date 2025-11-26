@@ -18,23 +18,19 @@ class RegistroSocioService
         DB::beginTransaction();
 
         try {
-            //Validar que el usuario exista
             $user = User::find($data['id_user']);
             if (!$user) {
                 return ['success' => false, 'message' => 'El usuario no existe.'];
             }
 
-            //Validar que el correo esté verificado
             if (is_null($user->email_verified_at)) {
                 return ['success' => false, 'message' => 'El usuario debe verificar su correo antes de registrar un socio.'];
             }
 
-            // Verificar si ya tiene un socio registrado
             if (Socio::where('id_user', $user->id)->exists()) {
                 return ['success' => false, 'message' => 'Este usuario ya tiene un socio registrado.'];
             }
 
-            //Crear socio
             $socio = Socio::create([
                 'id_user' => $user->id,
                 'numero_socio' => $data['numero_socio'],
@@ -66,7 +62,6 @@ class RegistroSocioService
                 throw new \Exception('No se pudo guardar el contrato PDF.');
             }
 
-            // Registrar contrato
             $contrato = Contrato::create([
                 'id_socio' => $socio->id,
                 'fecha_generacion' => now(),

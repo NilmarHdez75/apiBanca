@@ -23,7 +23,6 @@ class VerifyEmailController extends Controller
             ], 404);
         }
 
-        // Validar que la firma del enlace sea correcta
         if (!URL::hasValidSignature($request)) {
             return response()->json([
                 'success' => false,
@@ -31,7 +30,6 @@ class VerifyEmailController extends Controller
             ], 403);
         }
 
-        // Validar el hash del correo (seguridad adicional)
         if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
             return response()->json([
                 'success' => false,
@@ -39,7 +37,6 @@ class VerifyEmailController extends Controller
             ], 403);
         }
 
-        // Si ya está verificado
         if ($user->hasVerifiedEmail()) {
             return response()->json([
                 'success' => true,
@@ -47,7 +44,6 @@ class VerifyEmailController extends Controller
             ], 200);
         }
 
-        // Marcar como verificado
         $user->markEmailAsVerified();
         event(new Verified($user));
 

@@ -10,12 +10,10 @@ class ReSendVerificationController extends Controller
 {
     public function __invoke(Request $request)
     {
-        // Validar email
         $validated = $request->validate([
             'email' => 'required|email'
         ]);
 
-        // Buscar usuario
         $user = User::where('email', $validated['email'])->first();
 
         if (!$user) {
@@ -25,7 +23,6 @@ class ReSendVerificationController extends Controller
             ], 404);
         }
 
-        // Ya verificado
         if ($user->hasVerifiedEmail()) {
             return response()->json([
                 'success' => true,
@@ -33,7 +30,6 @@ class ReSendVerificationController extends Controller
             ], 200);
         }
 
-        // Reenviar email
         $user->sendEmailVerificationNotification();
 
         return response()->json([
