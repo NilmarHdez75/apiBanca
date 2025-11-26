@@ -34,7 +34,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    protected $appends = ['has_socio'];
 
     protected function casts(): array
     {
