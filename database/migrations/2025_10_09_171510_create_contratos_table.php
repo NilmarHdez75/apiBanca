@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contratos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_socio')->constrained('socios')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('socio_id')->constrained('socios')->onUpdate('cascade')->onDelete('cascade');
             $table->string('archivo_pdf');
             $table->timestamp('fecha_generacion')->useCurrent();
             $table->boolean('is_active')->default(true);

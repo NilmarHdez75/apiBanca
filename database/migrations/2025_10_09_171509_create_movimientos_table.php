@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('movimientos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_cuenta')->constrained('cuentas')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('cuenta_id')->constrained('cuentas')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('tipo_movimiento', ['deposito', 'retiro']);
             $table->decimal('monto', 10, 2);
             $table->timestamp('fecha_movimiento')->useCurrent();

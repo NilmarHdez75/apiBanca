@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cuentas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_socio')->constrained('socios')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('socio_id')->constrained('socios')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('tipo_cuenta', ['ahorro', 'crédito']);
             $table->decimal('saldo', 10, 2)->default(0);
             $table->date('fecha_apertura')->nullable();

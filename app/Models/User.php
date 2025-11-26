@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    protected $appends = ['has_socio'];
 
     protected function casts(): array
     {
@@ -55,10 +56,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getHasSocioAttribute()
     {
-        return $this->socios()->exists();
+        return $this->socio()->exists();
     }
 
-    public function socios(): HasOne{
+    public function socio(): HasOne{
         return $this->hasOne(Socio::class);
     }
 

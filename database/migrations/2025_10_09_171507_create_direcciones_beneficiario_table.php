@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('direcciones_beneficiario', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_beneficiario')->constrained('beneficiarios')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('beneficiario_id')->constrained('beneficiarios')->onUpdate('cascade')->onDelete('cascade');
             $table->string('calle');
             $table->string('numero_ext');
             $table->string('numero_int')->nullable();
