@@ -49,7 +49,7 @@ class VerifyEmailController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Correo verificado correctamente. Ya puedes registrar tu cuenta de socio.'
+            'message' => 'Correo verificado correctamente. Inicia Sesión para registrar tu cuenta de socio.'
         ], 200);
     }
 }
