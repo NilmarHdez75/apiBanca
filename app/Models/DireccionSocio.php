@@ -14,7 +14,7 @@ class DireccionSocio extends Model
     protected $table = 'direcciones_socio';
 
     protected $fillable = [
-        'id_socio',
+        'socio_id',
         'calle',
         'numero_ext',
         'numero_int',

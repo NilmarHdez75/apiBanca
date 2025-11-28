@@ -19,7 +19,7 @@ class RegistroSocioService
         DB::beginTransaction();
 
         try {
-            $user = User::find($data['id_user']);
+            $user = User::find($data['id']);
             if (!$user) {
                 return ['success' => false, 'message' => 'El usuario no existe.'];
             }
@@ -28,17 +28,17 @@ class RegistroSocioService
                 return ['success' => false, 'message' => 'El usuario debe verificar su correo antes de registrar un socio.'];
             }
 
-            if (Socio::where('id_user', $user->id)->exists()) {
+            if (Socio::where('user_id', $user->id)->exists()) {
                 return ['success' => false, 'message' => 'Este usuario ya tiene un socio registrado.'];
             }
 
-            $sucursal = Sucursal::find($data['id_sucursal']);
+            $sucursal = Sucursal::find($data['id']);
 
             if (!$sucursal) {
                 return ['success' => false, 'message' => 'La sucursal no existe.'];
             }
 
-            $ultimoSocio = Socio::where('id_sucursal', $sucursal->id)
+            $ultimoSocio = Socio::where('sucursal_id', $sucursal->id)
                 ->lockForUpdate()
                 ->orderBy('id', 'desc')
                 ->first();
@@ -50,7 +50,7 @@ class RegistroSocioService
             $numeroSocio = "10-{$numeroSucursal}-{$numeroConsecutivo}";
 
             $socio = Socio::create([
-                'id_user' => $user->id,
+                'user_id' => $user->id,
                 'numero_socio' => $numeroSocio,
                 'apellido_paterno' => $data['apellido_paterno'],
                 'apellido_materno' => $data['apellido_materno'],
@@ -61,7 +61,7 @@ class RegistroSocioService
                 'rfc' => $data['rfc'] ?? null,
                 'ine' => $data['ine'] ?? null,
                 'telefono' => $data['telefono'] ?? null,
-                'id_sucursal' => $sucursal->id,
+                'sucursal_id' => $sucursal->id,
             ]);
 
             $pdf = Pdf::loadView('pdf.contrato', [
@@ -80,7 +80,7 @@ class RegistroSocioService
             }
 
             $contrato = Contrato::create([
-                'id_socio' => $socio->id,
+                'socio_id' => $socio->id,
                 'fecha_generacion' => now(),
                 'archivo_pdf' => $filePath,
                 'is_active' => true,

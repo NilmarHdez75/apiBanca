@@ -13,7 +13,7 @@ class Socio extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'id_user',
+        'user_id',
         'numero_socio',
         'apellido_paterno',
         'apellido_materno',
@@ -24,7 +24,7 @@ class Socio extends Model
         'rfc',
         'ine',
         'telefono',
-        'id_sucursal',
+        'sucursal_id',
         'is_active',
     ];
 

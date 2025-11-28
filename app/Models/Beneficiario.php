@@ -12,7 +12,7 @@ class Beneficiario extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'id_socio',
+        'socio_id',
         'nombre',
         'apellido_paterno',
         'apellido_materno',

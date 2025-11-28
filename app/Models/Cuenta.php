@@ -12,7 +12,7 @@ class Cuenta extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'id_socio',
+        'socio_id',
         'tipo_cuenta',
         'saldo',
         'fecha_apertura',

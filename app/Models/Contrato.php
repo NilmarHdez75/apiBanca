@@ -11,7 +11,7 @@ class Contrato extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'id_socio',
+        'socio_id',
         'archivo_pdf',
         'fecha_generacion',
         'is_active',

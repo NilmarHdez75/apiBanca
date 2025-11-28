@@ -13,7 +13,7 @@ class DireccionBeneficiario extends Model
 
     protected $table = 'direcciones_beneficiario';
     protected $fillable = [
-        'id_beneficiario',
+        'beneficiario_id',
         'calle',
         'numero_ext',
         'numero_int',

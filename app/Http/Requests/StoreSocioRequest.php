@@ -22,7 +22,7 @@ class StoreSocioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_user' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
 
             'numero_socio' => 'required|string|max:20|unique:socios,numero_socio',
             'apellido_paterno' => 'required|string|max:50',
@@ -36,7 +36,7 @@ class StoreSocioRequest extends FormRequest
 
             'telefono' => 'nullable|string|max:15',
 
-            'id_sucursal' => 'required|exists:sucursales,id',
+            'sucursal_id' => 'required|exists:sucursales,id',
         ];
     }
 

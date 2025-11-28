@@ -11,7 +11,7 @@ class Movimiento extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'id_cuenta',
+        'cuenta_id',
         'tipo_movimiento',
         'monto',
         'fecha_movimiento',
