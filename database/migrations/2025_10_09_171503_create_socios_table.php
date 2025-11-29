@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('rfc')->nullable()->unique();
             $table->string('ine')->nullable()->unique();
             $table->string('telefono')->nullable();
-            $table->foreignId('id_sucursal')->constrained('sucursales')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('sucursal_id')->constrained('sucursales')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
