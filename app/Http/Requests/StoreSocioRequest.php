@@ -24,7 +24,6 @@ class StoreSocioRequest extends FormRequest
         return [
             'user_id' => 'required|exists:users,id',
 
-            'numero_socio' => 'required|string|max:20|unique:socios,numero_socio',
             'apellido_paterno' => 'required|string|max:50',
             'apellido_materno' => 'required|string|max:50',
             'sexo' => 'required|in:M,F',
@@ -43,17 +42,15 @@ class StoreSocioRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id_user.required' => 'Debe especificarse un usuario asociado.',
-            'id_user.exists' => 'El usuario asociado no existe.',
-            'numero_socio.required' => 'El número de socio es obligatorio.',
-            'numero_socio.unique' => 'Ya existe un socio con ese número.',
+            'user_id.required' => 'Debe especificarse un usuario asociado.',
+            'user_id.exists' => 'El usuario asociado no existe.',
             'sexo.in' => 'El valor de sexo debe ser M o F.',
             'fecha_nacimiento.before' => 'La fecha de nacimiento debe ser anterior a hoy.',
             'curp.size' => 'La CURP debe tener 18 caracteres.',
             'curp.unique' => 'Esta CURP ya está registrada.',
             'rfc.unique' => 'Este RFC ya está registrado.',
             'ine.unique' => 'Este número de INE ya está registrado.',
-            'id_sucursal.exists' => 'La sucursal seleccionada no existe.',
+            'sucursal_id.exists' => 'La sucursal seleccionada no existe.',
         ];
     }
 }
