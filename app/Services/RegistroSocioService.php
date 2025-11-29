@@ -19,7 +19,7 @@ class RegistroSocioService
         DB::beginTransaction();
 
         try {
-            $user = User::find($data['id']);
+            $user = User::find($data['user_id']);
             if (!$user) {
                 return ['success' => false, 'message' => 'El usuario no existe.'];
             }
@@ -32,7 +32,7 @@ class RegistroSocioService
                 return ['success' => false, 'message' => 'Este usuario ya tiene un socio registrado.'];
             }
 
-            $sucursal = Sucursal::find($data['id']);
+            $sucursal = Sucursal::find($data['sucursal_id']);
 
             if (!$sucursal) {
                 return ['success' => false, 'message' => 'La sucursal no existe.'];
