@@ -13,11 +13,13 @@ class ContratoGeneradoNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    protected $user;
     protected $socio;
     protected $filePath;
 
-    public function __construct($socio, $filePath)
+    public function __construct($user, $socio, $filePath)
     {
+        $this->user = $user;
         $this->socio = $socio;
         $this->filePath = $filePath;
     }
@@ -33,7 +35,7 @@ class ContratoGeneradoNotification extends Notification implements ShouldQueue
 
         return (new MailMessage)
             ->subject('Contrato de Registro - Caja Popular San Juan Bosco')
-            ->greeting('Hola ' . $this->socio->apellido_paterno . ' ' . $this->socio->apellido_materno)
+            ->greeting('Hola ' . $this->user->name . ' ' . $this->socio->apellido_paterno . ' ' . $this->socio->apellido_materno)
             ->line('Adjunto encontrarás tu contrato de registro como socio de la Caja Popular San Juan Bosco.')
             ->line('Por favor conserva este documento para tus registros.')
             ->attach($absolutePath, [

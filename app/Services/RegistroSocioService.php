@@ -88,7 +88,7 @@ class RegistroSocioService
 
             DB::commit();
 
-            $user->notify(new ContratoGeneradoNotification($socio, $filePath));
+            $user->notify(new ContratoGeneradoNotification($user, $socio, $filePath));
 
             return [
                 'success' => true,
