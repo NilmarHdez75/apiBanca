@@ -10,6 +10,7 @@ use App\Http\Controllers\DireccionSocioController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\SocioController;
 use App\Http\Controllers\SucursalController;
+use App\Http\Controllers\Validated\SocioValidationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +49,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
      */
 
     Route::get('/sucursales', [SucursalController::class, 'index']);
+
+    /*
+     Validar campos de socio
+     */
+    Route::get('/socios/validate-unique', [SocioValidationController::class, 'validateUnique']);
 
     /*
     Módulo de Socios (crear, ver, editar)
