@@ -3,11 +3,10 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    RewriteEngine On
 
     # Allow serving .well-known for Android App Links
     RewriteRule ^\.well-known/ - [L]
-
-    RewriteEngine On
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
