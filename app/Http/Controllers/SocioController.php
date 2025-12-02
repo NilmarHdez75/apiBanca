@@ -4,15 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSocioRequest;
 use App\Http\Requests\UpdateSocioRequest;
-use App\Models\Contrato;
 use App\Models\Socio;
-use App\Notifications\ContratoGeneradoNotification;
 use App\Services\RegistroSocioService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class SocioController extends Controller
 {
