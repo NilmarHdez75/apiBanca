@@ -103,6 +103,30 @@ class AuthController extends Controller
         ]);
     }
 
+    public function getSocioByUserId($userId)
+    {
+        $user = User::with('socio')->find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Usuario no encontrado'
+            ], 404);
+        }
+
+        if (!$user->socio) {
+            return response()->json([
+                'success' => false,
+                'message' => 'El usuario no tiene socio'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $user->socio
+        ], 200);
+    }
+
     /**
      * Cierre de sesión
      */

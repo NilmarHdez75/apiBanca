@@ -41,6 +41,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*     Sucursales     */
     Route::get('/sucursales', [SucursalController::class, 'index']);
 
+    Route::get('/users/{user_id}/socio', [AuthController::class, 'getSocioByUserId']);
+
     /*     Validar campos de socio     */
     Route::get('/socios/validate-unique', [SocioValidationController::class, 'validateUnique']);
 
