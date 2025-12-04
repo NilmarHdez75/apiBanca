@@ -13,9 +13,9 @@ class BeneficiarioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index($idSocio): JsonResponse
     {
-        return response()->json(['success' => true, 'data' => Beneficiario::with('socio')->get()]);
+        return response()->json(['success' => true, 'data' => Beneficiario::where('socio_id', $idSocio)->where('is_active', true)->get()]);
     }
 
     public function store(StoreBeneficiarioRequest $request): JsonResponse
@@ -43,7 +43,7 @@ class BeneficiarioController extends Controller
 
     public function destroy($id): JsonResponse
     {
-        $beneficiario = Beneficiario::find($id);
+        $beneficiario = Beneficiario::where('id', $id)->where('is_active', true)->first();
         if (!$beneficiario) return response()->json(['success' => false, 'message' => 'Beneficiario no encontrado.'], 404);
 
         $beneficiario->update(['is_active' => false]);

@@ -27,7 +27,7 @@ class UpdateDireccionBeneficiarioRequest extends FormRequest
             'municipio' => 'sometimes|string|max:60',
             'colonia' => 'sometimes|string|max:100',
             'calle' => 'sometimes|string|max:100',
-            'codigo_postal' => 'sometimes|string|max:10',
+            'cp' => 'sometimes|string|max:10',
             'num_exterior' => 'nullable|string|max:10',
             'num_interior' => 'nullable|string|max:10',
         ];

@@ -6,7 +6,6 @@ use App\Http\Requests\StoreDireccionSocioRequest;
 use App\Http\Requests\UpdateDireccionSocioRequest;
 use App\Models\DireccionSocio;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class DireccionSocioController extends Controller
@@ -30,7 +29,8 @@ class DireccionSocioController extends Controller
 
     public function show($id): JsonResponse
     {
-        $direccion = DireccionSocio::find($id);
+        $direccion = DireccionSocio::where('socio_id', $id)->where('is_active', true)->first();
+
         return $direccion
             ? response()->json(['success' => true, 'data' => $direccion])
             : response()->json(['success' => false, 'message' => 'Dirección no encontrada.'], 404);
@@ -38,7 +38,7 @@ class DireccionSocioController extends Controller
 
     public function update(UpdateDireccionSocioRequest $request, $id): JsonResponse
     {
-        $direccion = DireccionSocio::find($id);
+        $direccion = DireccionSocio::where('socio_id', $id)->first();
         if (!$direccion) {
             return response()->json(['success' => false, 'message' => 'Dirección no encontrada.'], 404);
         }

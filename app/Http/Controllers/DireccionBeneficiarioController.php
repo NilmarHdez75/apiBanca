@@ -34,7 +34,7 @@ class DireccionBeneficiarioController extends Controller
 
     public function show($id): JsonResponse
     {
-        $direccion = DireccionBeneficiario::find($id);
+        $direccion = DireccionBeneficiario::where('beneficiario_id', $id)->first();
         return $direccion
             ? response()->json(['success' => true, 'data' => $direccion])
             : response()->json(['success' => false, 'message' => 'Dirección no encontrada.'], 404);
@@ -42,7 +42,7 @@ class DireccionBeneficiarioController extends Controller
 
     public function update(UpdateDireccionBeneficiarioRequest $request, $id): JsonResponse
     {
-        $direccion = DireccionBeneficiario::find($id);
+        $direccion = DireccionBeneficiario::where('beneficiario_id', $id)->first();
         if (!$direccion) {
             return response()->json(['success' => false, 'message' => 'Dirección no encontrada.'], 404);
         }

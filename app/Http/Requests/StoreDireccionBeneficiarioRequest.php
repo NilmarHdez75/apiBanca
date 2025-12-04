@@ -28,7 +28,7 @@ class StoreDireccionBeneficiarioRequest extends FormRequest
             'municipio' => 'required|string|max:60',
             'colonia' => 'required|string|max:100',
             'calle' => 'required|string|max:100',
-            'codigo_postal' => 'required|string|max:10',
+            'cp' => 'required|string|max:10',
             'num_exterior' => 'nullable|string|max:10',
             'num_interior' => 'nullable|string|max:10',
         ];

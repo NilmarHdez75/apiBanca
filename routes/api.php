@@ -13,11 +13,8 @@ use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\Validated\SocioValidationController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Rutas Públicas (sin autenticación)
-|--------------------------------------------------------------------------
-*/
+/* Rutas Públicas (sin autenticación) */
+
 // Registro e inicio de sesión
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -34,60 +31,40 @@ Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
 // Reenviar correo de verificación
 Route::post('/email/resend', ReSendVerificationController::class);
 
-/*
-|--------------------------------------------------------------------------
-| Rutas Protegidas
-|--------------------------------------------------------------------------
-*/
+/* Rutas Protegidas */
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     // Cerrar sesión
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    /*
-     Sucursales
-     */
-
+    /*     Sucursales     */
     Route::get('/sucursales', [SucursalController::class, 'index']);
 
-    /*
-     Validar campos de socio
-     */
+    /*     Validar campos de socio     */
     Route::get('/socios/validate-unique', [SocioValidationController::class, 'validateUnique']);
 
-    /*
-    Módulo de Socios (crear, ver, editar)
-    */
+    /*    Módulo de Socios (crear, ver, editar)    */
     Route::get('/socios/{id}', [SocioController::class, 'show']);      // Ver socio
     Route::post('/socios', [SocioController::class, 'store']);         // Crear socio
-    Route::put('/socios/{id}', [SocioController::class, 'update']);    // Editar socio
 
-    /*
-     Consultas financieras (cuentas y movimientos)
-    */
+    /*     Consultas financieras (cuentas y movimientos)    */
     Route::get('/socios/{id}/cuentas', [CuentaController::class, 'cuentasPorSocio']);                  // Ver cuentas del socio
     Route::get('/cuentas/{id}/movimientos', [MovimientoController::class, 'movimientosPorCuenta']); // Ver movimientos de una cuenta
 
-
-    /*
-     Direcciones de Socios
-    */
+    /*     Direcciones de Socios    */
     Route::get('/socios/{id}/direccion', [DireccionSocioController::class, 'show']);    // Ver dirección del socio
     Route::post('/socios/{id}/direccion', [DireccionSocioController::class, 'store']);  // Agregar dirección
     Route::put('/socios/{id}/direccion', [DireccionSocioController::class, 'update']);  // Actualizar dirección
 
-    /*
-     Módulo de Beneficiarios (CRUD)
-    */
-    Route::get('/beneficiarios', [BeneficiarioController::class, 'index']);        // Listar beneficiarios
+    /*     Módulo de Beneficiarios   */
+    Route::get('/socios/{id}/beneficiarios', [BeneficiarioController::class, 'index']);        // Listar beneficiarios
     Route::post('/beneficiarios', [BeneficiarioController::class, 'store']);       // Crear beneficiario
     Route::get('/beneficiarios/{id}', [BeneficiarioController::class, 'show']);    // Ver beneficiario
     Route::put('/beneficiarios/{id}', [BeneficiarioController::class, 'update']);  // Editar beneficiario
     Route::delete('/beneficiarios/{id}', [BeneficiarioController::class, 'destroy']); // Eliminar beneficiario
 
-    /*
-     Direcciones de Beneficiarios
-    */
+    /*     Direcciones de Beneficiarios    */
     Route::get('/beneficiarios/{id}/direccion', [DireccionBeneficiarioController::class, 'show']);   // Ver dirección
     Route::post('/beneficiarios/{id}/direccion', [DireccionBeneficiarioController::class, 'store']); // Crear dirección
     Route::put('/beneficiarios/{id}/direccion', [DireccionBeneficiarioController::class, 'update']); // Actualizar dirección

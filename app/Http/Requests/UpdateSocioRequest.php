@@ -24,7 +24,6 @@ class UpdateSocioRequest extends FormRequest
         $id = $this->route('id');
 
         return [
-            'sucursal_id' => 'sometimes|exists:sucursales,id',
             'apellido_paterno' => 'sometimes|string|max:100',
             'apellido_materno' => 'sometimes|string|max:100',
             'telefono' => 'sometimes|string|max:20',
