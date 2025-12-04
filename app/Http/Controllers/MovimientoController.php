@@ -17,6 +17,20 @@ class MovimientoController extends Controller
         return response()->json(['success' => true, 'data' => $movimientos]);
     }
 
+    public function movimientosPorCuenta($cuentaId): JsonResponse
+    {
+        $movimientos = Movimiento::where('cuenta_id', $cuentaId)
+            ->where('is_active', true)
+            ->orderBy('fecha_movimiento', 'desc')
+            ->get();
+
+        if ($movimientos->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'No se encontraron movimientos para esta cuenta.'], 404);
+        }
+
+        return response()->json(['success' => true, 'data' => $movimientos], 200);
+    }
+
     public function store(StoreMovimientoRequest $request): JsonResponse
     {
         try {

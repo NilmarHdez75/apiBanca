@@ -55,7 +55,7 @@ class SocioController extends Controller
     // Mostrar socio específico
     public function show($id): JsonResponse
     {
-        $socio = Socio::with(['user', 'sucursal', 'direccion', 'beneficiarios'])->find($id);
+        $socio = Socio::with(['user', 'sucursal'])->find($id);
 
         if (!$socio || !$socio->is_active) {
             return response()->json(['success' => false, 'message' => 'Socio no encontrado.'], 404);

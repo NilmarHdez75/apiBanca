@@ -17,6 +17,19 @@ class CuentaController extends Controller
         return response()->json(['success' => true, 'data' => $cuentas]);
     }
 
+    public function cuentasPorSocio($socioId): JsonResponse
+    {
+        $cuentas = Cuenta::where('socio_id', $socioId)
+            ->where('is_active', true)
+            ->get();
+
+        if ($cuentas->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'No se encontraron cuentas para este socio.'], 404);
+        }
+
+        return response()->json(['success' => true, 'data' => $cuentas], 200);
+    }
+
     public function store(StoreCuentaRequest $request): JsonResponse
     {
         try {

@@ -63,6 +63,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/socios/{id}', [SocioController::class, 'update']);    // Editar socio
 
     /*
+     Consultas financieras (cuentas y movimientos)
+    */
+    Route::get('/socios/{id}/cuentas', [CuentaController::class, 'cuentasPorSocio']);                  // Ver cuentas del socio
+    Route::get('/cuentas/{id}/movimientos', [MovimientoController::class, 'movimientosPorCuenta']); // Ver movimientos de una cuenta
+
+
+    /*
      Direcciones de Socios
     */
     Route::get('/socios/{id}/direccion', [DireccionSocioController::class, 'show']);    // Ver dirección del socio
@@ -84,10 +91,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/beneficiarios/{id}/direccion', [DireccionBeneficiarioController::class, 'show']);   // Ver dirección
     Route::post('/beneficiarios/{id}/direccion', [DireccionBeneficiarioController::class, 'store']); // Crear dirección
     Route::put('/beneficiarios/{id}/direccion', [DireccionBeneficiarioController::class, 'update']); // Actualizar dirección
-
-    /*
-     Consultas financieras (cuentas y movimientos)
-    */
-    Route::get('/cuentas', [CuentaController::class, 'index']);                  // Ver cuentas del socio
-    Route::get('/cuentas/{id}/movimientos', [MovimientoController::class, 'index']); // Ver movimientos de una cuenta
 });
