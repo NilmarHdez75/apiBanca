@@ -18,7 +18,7 @@ class CuentaFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_socio' => Socio::factory(),
+            'socio_id' => 5,
             'tipo_cuenta' => $this->faker->randomElement(['ahorro', 'crédito']),
             'saldo' => $this->faker->randomFloat(2, 100, 10000),
             'fecha_apertura' => $this->faker->date(),

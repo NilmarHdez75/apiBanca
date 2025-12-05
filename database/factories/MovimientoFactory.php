@@ -18,7 +18,7 @@ class MovimientoFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_cuenta' => Cuenta::factory(),
+            'cuenta_id' => Cuenta::factory(),
             'tipo_movimiento' => $this->faker->randomElement(['deposito', 'retiro']),
             'monto' => $this->faker->randomFloat(2, 50, 5000),
             'fecha_movimiento' => $this->faker->dateTimeThisYear(),

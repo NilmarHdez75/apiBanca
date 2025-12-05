@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Cuenta;
+use App\Models\Movimiento;
 use Illuminate\Database\Seeder;
 
 class CuentaSeeder extends Seeder
@@ -12,6 +13,20 @@ class CuentaSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $socioId = 5;
+
+        $cuentas = Cuenta::factory()
+            ->count(3)
+            ->create([
+                'socio_id' => $socioId
+            ]);
+
+        foreach ($cuentas as $cuenta) {
+            Movimiento::factory()
+                ->count(15)
+                ->create([
+                    'cuenta_id' => $cuenta->id
+                ]);
+        }
     }
 }

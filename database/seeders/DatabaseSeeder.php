@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             SucursalSeeder::class,
-            SocioSeeder::class,
+            CuentaSeeder::class,
         ]);
     }
 }
