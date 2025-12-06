@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -132,6 +133,12 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
+        Log::info('Cerrando sesión para el usuario', [
+            'user_id' => $request->user()->id,
+            'token_id' => $request->user()->currentAccessToken()->id ?? null,
+            'ip' => $request->ip(),
+        ]);
+
         $user = $request->user();
 
         if (!$user) {
